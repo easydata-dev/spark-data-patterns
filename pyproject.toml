@@ -14,6 +14,12 @@ moto = {extras = ["all", "s3", "server"], version = "^5.0.12"}
 boto3 = "^1.34.159"
 pytest = "^8.3.2"
 
+[tool.poetry.group.dev.dependencies]
+black = "^24.8.0"
+flake8 = "^7.1.1"
+isort = "^5.13.2"
+pre-commit = "^3.8.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
