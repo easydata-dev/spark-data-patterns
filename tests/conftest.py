@@ -28,7 +28,11 @@ def spark(moto_endpoint):
 
     os.environ["SPARK_LOCAL_IP"] = "localhost"
     os.environ["PYSPARK_SUBMIT_ARGS"] = (
-        '--packages "org.apache.hadoop:hadoop-aws:3.3.4" pyspark-shell'
+        '--packages "'
+        "org.apache.hadoop:hadoop-aws:3.3.4,"
+        "com.crealytics:spark-excel_2.12:3.5.1_0.20.4"
+        '" '
+        "pyspark-shell"
     )
 
     spark = SparkSession.builder.config(
@@ -61,9 +65,7 @@ def test_s3_bucket_name(moto_endpoint) -> str:
         for file in files:
             local_path = os.path.join(root, file)
             relative_path = os.path.relpath(local_path, local_directory)
-            s3_path = relative_path.replace(
-                "\\", "/"
-            )  # Ensure S3 path uses forward slashes
+            s3_path = relative_path.replace("\\", "/")
             bucket.upload_file(local_path, s3_path)
     mock_aws().stop()
     yield BUCKET_NAME
