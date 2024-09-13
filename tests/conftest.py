@@ -30,7 +30,8 @@ def spark(moto_endpoint):
     os.environ["PYSPARK_SUBMIT_ARGS"] = (
         '--packages "'
         "org.apache.hadoop:hadoop-aws:3.3.4,"
-        "com.crealytics:spark-excel_2.12:3.5.1_0.20.4"
+        "com.crealytics:spark-excel_2.12:3.5.1_0.20.4,"
+        "io.delta:delta-spark_2.12:3.2.0"
         '" '
         "pyspark-shell"
     )
@@ -41,7 +42,9 @@ def spark(moto_endpoint):
             "spark.hadoop.fs.s3a.access.key": "foo",
             "spark.hadoop.fs.s3a.secret.key": "foo",
             "spark.hadoop.fs.s3a.endpoint": moto_endpoint,
-        },
+            "spark.sql.extensions": "io.delta.sql.DeltaSparkSessionExtension",
+            "spark.sql.catalog.spark_catalog": "org.apache.spark.sql.delta.catalog.DeltaCatalog",
+        }
     ).getOrCreate()
     yield spark
 
