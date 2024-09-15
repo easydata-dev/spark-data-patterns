@@ -31,7 +31,8 @@ def spark(moto_endpoint):
         '--packages "'
         "org.apache.hadoop:hadoop-aws:3.3.4,"
         "com.crealytics:spark-excel_2.12:3.5.1_0.20.4,"
-        "io.delta:delta-spark_2.12:3.2.0"
+        "io.delta:delta-spark_2.12:3.2.0,"
+        "org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.6.1"
         '" '
         "pyspark-shell"
     )
