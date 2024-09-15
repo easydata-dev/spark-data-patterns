@@ -32,7 +32,8 @@ def spark(moto_endpoint):
         "org.apache.hadoop:hadoop-aws:3.3.4,"
         "com.crealytics:spark-excel_2.12:3.5.1_0.20.4,"
         "io.delta:delta-spark_2.12:3.2.0,"
-        "org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.6.1"
+        "org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.6.1,"
+        "org.apache.hudi:hudi-spark3.5-bundle_2.12:0.15.0"
         '" '
         "pyspark-shell"
     )
@@ -45,6 +46,8 @@ def spark(moto_endpoint):
             "spark.hadoop.fs.s3a.endpoint": moto_endpoint,
             "spark.sql.extensions": "io.delta.sql.DeltaSparkSessionExtension",
             "spark.sql.catalog.spark_catalog": "org.apache.spark.sql.delta.catalog.DeltaCatalog",
+            "spark.serializer": "org.apache.spark.serializer.KryoSerializer",
+            "spark.kryo.registrator": "org.apache.spark.HoodieSparkKryoRegistrar",
         }
     ).getOrCreate()
     yield spark
